@@ -1,0 +1,88 @@
+@import url('https://fonts.googleapis.com/css2?family=Itim&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Jua&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Italianno&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Jersey+20&display=swap');
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.font{
+  font-family: "Itim", system-ui;
+  font-weight: 400;
+  font-size: x-large;
+}
+.a{
+  font-family: "Itim", system-ui;
+  font-weight: 400;
+  font-size: 32px;
+}
+
+.horizontal_line {
+  width: 90%;
+  height: 5px;
+  border-top: 1px solid black;
+  line-height: 80%;
+}
+.b{
+  font-family: "Jua", sans-serif;
+  font-size: 26px;
+}
+.c{
+  font-family: "Italianno", cursive;
+  font-weight: 400;
+  font-style: normal;
+  font-size: 64px;
+}
+.d{
+  font-family: "Jersey 20", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+  font-size: 35px;
+  margin-top: -30px;
+}
+.e{
+  margin-right: 6rem;
+}
+.f{
+  font-family: "Itim", system-ui;
+  font-size: 28px;
+  margin-top: 14px;
+  margin-left: 1rem;
+}
+
+/* Hide dropdown initially */
+.l{
+  font-size: 33px;
+}
+.g:hover div{
+  display: block;
+}
+/** return (
+    <div className='h-14 fixed top-0 z-10 w-full' style={{backgroundColor:"#D9D9D9"}}>
+        <nav >
+      <ul style={{listStyle:"none"}} className='flex justify-end items-center gap-4 e' >
+        <li className='font mt-2 mr-[600px] ml-6 '><a href="#">Mess Saathi
+        </a> </li>
+        <li className='font mt-2 mr-8  hover:font-extrabold cursor-pointer'onClick={()=>{Toggleyesterday()}}>{flag?'':tag?"Today's Menu":"Yesterday's Menu"}</li>
+        <a href="./menu.pdf" download={"hostelmenu.pdf"}><li className='font mt-auto  hover:font-extrabold'>Download Menu <b className='text-4xl'>↓</b></li></a>
+        <li className='relative group'>
+         <button className='font mt-2 hover:font-extrabold cursor-pointer ml-6'>{hostel}
+         </button>
+         <ul className='absolute top-10 right-0 bg-white shadow-lg  rounded hidden group-hover:block w-48'>
+              <li className='p-2  cursor-not-allowed font-extrabold flex ' >
+                Girls Hostel
+              </li>
+              <li className='p-2 cursor-pointer' onClick={()=>{sethostel("LH 1 TO 4")}}>LH 1 TO 4</li>
+              <li className='p-2 cursor-not-allowed font-extrabold inline-block'>
+                Boys Hostel
+              </li>
+              <li className='p-2 cursor-pointer' onClick={()=>{sethostel("BH 1 TO 6")}}>BH 1 TO 6 </li>
+              <li className='p-2 cursor-pointer' onClick={()=>{sethostel("BH 9 TO 12")}}>BH 9 TO 12 </li>
+              <li className='p-2 cursor-pointer' onClick={()=>{sethostel("BH 7 OR 11")}}>BH 7 OR 11</li>
+            </ul>
+        </li>
+      </ul>
+      </nav>
+    </div>
+  )
+}**/
