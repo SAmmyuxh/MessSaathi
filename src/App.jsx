@@ -40,50 +40,39 @@ function App() {
   
   // const [flag, setflag] = useState(false)
   // const [tag, settag] = useState(false)
-  function getFromLocalStorage(key, defaultValue) {
+  function getFromSessionStorage(key, defaultValue) {
     try {
-      const storedValue = localStorage.getItem(key);
+      const storedValue = sessionStorage.getItem(key);
       return storedValue !== null ? JSON.parse(storedValue) : defaultValue;
-      
     } catch (error) {
-      console.warn(`Error parsing JSON from localStorage key "${key}":`, error);
+      console.warn(`Error parsing JSON from sessionStorage key "${key}":`, error);
       return defaultValue;
     }
   }
+
+  // Initialize state with values from sessionStorage or defaults
+  const [dayindex, setdayindex] = useState(() => getFromSessionStorage("dayindex", 6));
+  const [weekindex, setweekindex] = useState(() => getFromSessionStorage("weekindex", 0));
+  const [flag, setflag] = useState(() => getFromSessionStorage("flag", false));
+  const [tag, settag] = useState(() => getFromSessionStorage("tag", false));
  
 
-  // Usage in your component
-  const [dayindex, setdayindex] = useState(() => getFromLocalStorage("dayindex", new Date().getDay()));
-  const [weekindex, setweekindex] = useState(() => getFromLocalStorage("weekindex", 1));
-   
-  const [flag, setflag] = useState(() => getFromLocalStorage("flag", false));
-  const [tag, settag] = useState(() => getFromLocalStorage("tag", false));
-  let k;
-    k = new Date().getDay()
-  
+  // Only update sessionStorage when values change
+  useEffect(() => {
+    sessionStorage.setItem("dayindex", JSON.stringify(dayindex));
+  }, [dayindex]);
 
   useEffect(() => {
-   setdayindex(k);
-  }, [k])
-  
+    sessionStorage.setItem("weekindex", JSON.stringify(weekindex));
+  }, [weekindex]);
+
   useEffect(() => {
-    const preventReload = (event) => {
-        event.preventDefault();
-        event.returnValue = "";  // Most browsers show a confirmation dialog    
-    };
-  
-    window.addEventListener("beforeunload", preventReload);
-    return () => window.removeEventListener("beforeunload", preventReload);
-  }, [flag, tag]);
-  
-  
+    sessionStorage.setItem("flag", JSON.stringify(flag));
+  }, [flag]);
+
   useEffect(() => {
-   localStorage.setItem("weekindex",JSON.stringify(weekindex))
-   localStorage.setItem("dayindex",JSON.stringify(dayindex))
-   localStorage.setItem("flag",JSON.stringify(flag))
-   localStorage.setItem("tag",JSON.stringify(tag))
-  }, [dayindex,weekindex,flag,tag])
-  
+    sessionStorage.setItem("tag", JSON.stringify(tag));
+  }, [tag]);
   const updatetimeandtype= ()=>{
     let s = new Date();
     const hours = s.getHours();
@@ -160,11 +149,13 @@ function App() {
       if (dayindex === 6) {
         // If it's Sunday, go to Monday of the next week
         setdayindex(0);
-        setweekindex(weekindex===3?0:weekindex+1);
+        setweekindex(weekindex===3?0:weekindex);
       } else  if(dayindex===0 && weekindex === 3){
        setdayindex(dayindex+1)
-       setweekindex(0)
-      
+       setweekindex(0)     
+      }else if(dayindex===0){
+      setdayindex(dayindex + 1)
+      setweekindex(weekindex+1)
       }
       else{
         setdayindex(dayindex + 1); 
@@ -173,13 +164,18 @@ function App() {
      
     } else {
       setflag(false);
-      if (dayindex === 0) {
+      if (dayindex === 1 && weekindex ===0) {
         // Moving back to Sunday of the previous week
-        setdayindex(6);
-        setweekindex(weekindex===0?3:weekindex-1);
+        setdayindex(0);
+        setweekindex(3);
       }else if(dayindex === 1 && weekindex===0){
        setdayindex(0)
        setweekindex(3)
+      }else if(dayindex===0){
+        setdayindex(6)
+      }else if(dayindex ===1){
+      setdayindex(0);
+      setweekindex(weekindex-1)
       } else {
         setdayindex(dayindex - 1); // Move to the previous day within the same week
       }
@@ -203,6 +199,8 @@ function App() {
           // If it's Monday, go to Sunday of the previous week
           setdayindex(0);
           setweekindex(weekindex === 3 ? 0 : weekindex-1);
+        }else if(dayindex === 0){
+        setdayindex(6)
         }else {
           setdayindex(dayindex - 1); // Move to the previous day within the same week
         }
@@ -216,7 +214,9 @@ function App() {
           // Move forward to Monday of the next week
           setdayindex(1);
           setweekindex(weekindex === 3?0:weekindex+1);
-        } else  {
+        } else if(dayindex === 6){
+        setdayindex(0)
+        }else  {
           setdayindex(dayindex + 1); // Move to the next day within the same week
         }
       }
