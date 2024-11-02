@@ -51,7 +51,7 @@ function App() {
   }
 
   // Initialize state with values from sessionStorage or defaults
-  const [dayindex, setdayindex] = useState(() => getFromSessionStorage("dayindex", 6));
+  const [dayindex, setdayindex] = useState(() => getFromSessionStorage("dayindex", new Date().getDay()));
   const [weekindex, setweekindex] = useState(() => getFromSessionStorage("weekindex", 0));
   const [flag, setflag] = useState(() => getFromSessionStorage("flag", false));
   const [tag, settag] = useState(() => getFromSessionStorage("tag", false));
