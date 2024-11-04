@@ -52,7 +52,7 @@ function App() {
 
   // Initialize state with values from sessionStorage or defaults
   const [dayindex, setdayindex] = useState(() => getFromSessionStorage("dayindex", new Date().getDay()));
-  const [weekindex, setweekindex] = useState(() => getFromSessionStorage("weekindex", 0));
+  const [weekindex, setweekindex] = useState(() => getFromSessionStorage("weekindex", 1));
   const [flag, setflag] = useState(() => getFromSessionStorage("flag", false));
   const [tag, settag] = useState(() => getFromSessionStorage("tag", false));
  
@@ -185,7 +185,7 @@ function App() {
   
    useEffect(() => {
       if (dayindex === 1) {
-        setweekindex( (weekindex % 4)); // Safely update weekindex
+        setweekindex( ((weekindex) % 4)); // Safely update weekindex
       } 
      }, [dayindex])
     
@@ -206,10 +206,7 @@ function App() {
         }
       } else {
         settag(false);
-        if(dayindex===0 && weekindex ===0){
-          setdayindex(1)
-          setweekindex(3)
-       }else
+       
         if (dayindex === 0) {
           // Move forward to Monday of the next week
           setdayindex(1);
