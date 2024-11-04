@@ -40,6 +40,36 @@ function App() {
   
   // const [flag, setflag] = useState(false)
   // const [tag, settag] = useState(false)
+
+  const updateWeekIndex = () => {
+    const today = new Date();
+    const currentDay = today.getDay(); // 0 = Sunday, 1 = Monday, ..., 6 = Saturday
+
+    // Check if today is Sunday
+    if (currentDay === 0) {
+      // Increment weekindex for the next day (Monday)
+      setweekindex((prevWeekIndex) => (prevWeekIndex + 1) % 4); // Wrap around after 3
+    }
+  };
+
+  useEffect(() => {
+    // Initial update on component mount
+    updateWeekIndex();
+
+    // Set an interval to update every day
+    const intervalId = setInterval(() => {
+      const today = new Date();
+      const currentDay = today.getDay();
+      
+      // Only update if it's Sunday
+      if (currentDay === 0) {
+        updateWeekIndex();
+      }
+    }, 24 * 60 * 60 * 1000); // Check every 24 hours
+
+    return () => clearInterval(intervalId); // Cleanup on unmount
+  }, []);
+
   function getFromSessionStorage(key, defaultValue) {
     try {
       const storedValue = sessionStorage.getItem(key);
@@ -143,81 +173,54 @@ function App() {
     }
   }, [dayindex, weekindex,flag,tag]);
   
-   const Toggletomorrow = () => {
+  const Toggletomorrow = () => {
     if (!flag) {
       setflag(true);
-      if (dayindex === 6) {
-        // If it's Sunday, go to Monday of the next week
-        setdayindex(0);
-        setweekindex(weekindex===3?0:weekindex);
-      } else  if(dayindex===0 && weekindex === 3){
-       setdayindex(dayindex+1)
-       setweekindex(0)     
-      }else if(dayindex===0){
-      setdayindex(dayindex + 1)
-      setweekindex(weekindex+1)
+      if (dayindex === 6) { // If it's Saturday, go to Sunday
+        setdayindex(0); // Increment weekindex
+      } else {
+        setdayindex(dayindex + 1);
+        if (dayindex === 0) { // If it's Sunday, increment weekindex
+          setweekindex((weekindex + 1) % 4);
+        }
       }
-      else{
-        setdayindex(dayindex + 1); 
-       // Move to the next day within the same week
-      }
-     
     } else {
       setflag(false);
-      if (dayindex === 1 && weekindex ===0) {
-        // Moving back to Sunday of the previous week
-        setdayindex(0);
-        setweekindex(3);
-      }else if(dayindex === 1 && weekindex===0){
-       setdayindex(0)
-       setweekindex(3)
-      }else if(dayindex===0){
-        setdayindex(6)
-      }else if(dayindex ===1){
-      setdayindex(0);
-      setweekindex(weekindex-1)
+      if (dayindex === 0) { // If it's Sunday, go to Saturday
+        setdayindex(6); // Decrement weekindex
       } else {
-        setdayindex(dayindex - 1); // Move to the previous day within the same week
+        setdayindex(dayindex - 1);
+        if (dayindex === 1) { // If it's Monday, decrement weekindex
+          setweekindex((weekindex - 1 + 4) % 4);
+        }
       }
     }
-  };   
+  };
   
-  
-   useEffect(() => {
-      if (dayindex === 1) {
-        setweekindex( ((weekindex) % 4)); // Safely update weekindex
-      } 
-     }, [dayindex])
-    
-    const Toggleyesterday = () => {
-      if (!tag) {
-        settag(true);
-         if(dayindex===1&&weekindex === 0){
-            setdayindex(0);
-          setweekindex(3)
-        } else if (dayindex === 1) {
-          // If it's Monday, go to Sunday of the previous week
-          setdayindex(0);
-          setweekindex(weekindex === 3 ? 0 : weekindex-1);
-        }else if(dayindex === 0){
-        setdayindex(6)
-        }else {
-          setdayindex(dayindex - 1); // Move to the previous day within the same week
-        }
+  const Toggleyesterday = () => {
+    if (!tag) {
+      settag(true);
+      if (dayindex === 0) { // If it's Sunday, go to Saturday
+        setdayindex(6);
+        // Decrement weekindex
       } else {
-        settag(false);
-       
-        if (dayindex === 0) {
-          // Move forward to Monday of the next week
-          setdayindex(1);
-          setweekindex(weekindex === 3?0:weekindex+1);
-        } else if(dayindex === 6){
-        setdayindex(0)
-        }else  {
-          setdayindex(dayindex + 1); // Move to the next day within the same week
+        setdayindex(dayindex - 1);
+        if (dayindex === 1) { // If it's Monday, decrement weekindex
+          setweekindex((weekindex - 1 + 4) % 4);
         }
       }
-    };
+    } else {
+      settag(false);
+      if (dayindex === 6) { // If it's Saturday, go to Sunday
+        setdayindex(0); // Increment weekindex
+      } else {
+        setdayindex(dayindex + 1);
+        if (dayindex === 0) { // If it's Sunday, increment weekindex
+          setweekindex((weekindex + 1) % 4);
+        }
+      }
+    }
+  };
   return (
     <>
     <div className='relative h-[900px] '>
