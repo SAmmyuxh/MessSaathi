@@ -18,17 +18,24 @@ function App() {
 
   // Persistent states
   const [dayindex, setdayindex] = useState(() => getFromSessionStorage("dayindex", new Date().getDay()));
-  const [weekindex, setweekindex] = useState(() => getFromSessionStorage("weekindex", calculateInitialWeekIndex()));
+  const [weekindex, setweekindex] = useState(() => getFromSessionStorage("weekindex", 0));
   const [flag, setflag] = useState(() => getFromSessionStorage("flag", false));
   const [tag, settag] = useState(() => getFromSessionStorage("tag", false));
 
   // Helper to calculate the initial week index based on the current date
-  function calculateInitialWeekIndex() {
-    const today = new Date();
-    const startOfCycle = new Date("2024-01-01"); // Example: Start of the 4-week cycle
-    const daysSinceStart = Math.floor((today - startOfCycle) / (1000 * 60 * 60 * 24));
-    return Math.floor(daysSinceStart / 7) % 4; // Determine the week index (0-3)
-  }
+ useEffect(() => {
+   const updateandcheckweek =()=>{
+       const now = new Date();
+       const day = now.getDay();
+       const hours = now.getHours();
+      if(day === 0 && hours >=12){
+        setweekindex((prevweek)=>(prevweek +1)%4);
+      }
+   }
+   const interval = setInterval(updateandcheckweek, 60000);
+   return () => clearInterval(interval);
+ }, [])
+ 
 
   // Save states to sessionStorage when they change
   useEffect(() => {
@@ -96,53 +103,117 @@ function App() {
     }
   }, [flag, tag]);
 
-  const Toggletomorrow = () => {
-    if (!flag) {
+  const Toggletomorrow = ()=>{
+    if(!flag){
       setflag(true);
-      setdayindex((prev) => {
-        const newDayIndex = (prev + 1) % 7;
-        if (newDayIndex === 0) {
-          // Transition to next week if the new day is Monday
-          setweekindex((prevWeek) => (prevWeek + 1) % 4);
+      console.log(dayindex)
+      if(dayindex === 6){
+        setdayindex(0);
+      }else if(dayindex === 0){
+        setdayindex(1)
+        if(weekindex === 3){
+          setweekindex(0);
         }
-        return newDayIndex;
-      });
-    } else {
+        setweekindex(weekindex+1);
+      }else{
+        setdayindex(dayindex+1);
+      }
+      
+    }else{
       setflag(false);
-      setdayindex((prev) => {
-        const newDayIndex = (prev - 1 + 7) % 7;
-        if (newDayIndex === 6) {
-          // Transition to previous week if the new day is Sunday
-          setweekindex((prevWeek) => (prevWeek - 1 + 4) % 4);
+      if(dayindex === 0){
+        setdayindex(6);
+      }else if(dayindex === 1){
+        setdayindex(0)
+        if(weekindex === 0){
+          setweekindex(3);
         }
-        return newDayIndex;
-      });
+      }else{
+        setdayindex(dayindex-1);
+      }
+      
+      
     }
-  };
+  } 
+  const Toggleyesterday = ()=>{
+    if(!tag){
+      settag(true)
+      if(dayindex === 0){
+        setdayindex(6)
+      }else if(dayindex === 1){
+        setdayindex(0)
+        if(weekindex === 0){
+          setweekindex(3)
+        }
+        setweekindex(weekindex -1)
+      }else{
+        setdayindex(dayindex-1)
+      }
+     
+    }else{
+      settag(false)
+      if(dayindex === 6){
+        setdayindex(0)
+      }else if(dayindex === 0){
+        setdayindex(1)
+        if(weekindex === 3){
+          setweekindex(0)
+        }
+        setweekindex(weekindex+1)
+      }else{
+        setdayindex(dayindex+1);
+      }
+      
+    }
+  }
+
+  // const Toggletomorrow = () => {
+  //   if (!flag) {
+  //     setflag(true);
+  //     setdayindex((prev) => {
+  //       const newDayIndex = (prev + 1) % 7;
+  //       if (newDayIndex === 0) {
+  //         // Transition to next week if the new day is Monday
+  //         setweekindex((prevWeek) => (prevWeek + 1) % 4);
+  //       }
+  //       return newDayIndex;
+  //     });
+  //   } else {
+  //     setflag(false);
+  //     setdayindex((prev) => {
+  //       const newDayIndex = (prev - 1 + 7) % 7;
+  //       if (newDayIndex === 6) {
+  //         // Transition to previous week if the new day is Sunday
+  //         setweekindex((prevWeek) => (prevWeek - 1 + 4) % 4);
+  //       }
+  //       return newDayIndex;
+  //     });
+  //   }
+  // };
   
-  const Toggleyesterday = () => {
-    if (!tag) {
-      settag(true);
-      setdayindex((prev) => {
-        const newDayIndex = (prev - 1 + 7) % 7;
-        if (newDayIndex === 6) {
-          // Transition to previous week if the new day is Sunday
-          setweekindex((prevWeek) => (prevWeek - 1 + 4) % 4);
-        }
-        return newDayIndex;
-      });
-    } else {
-      settag(false);
-      setdayindex((prev) => {
-        const newDayIndex = (prev + 1) % 7;
-        if (newDayIndex === 0) {
-          // Transition to next week if the new day is Monday
-          setweekindex((prevWeek) => (prevWeek + 1) % 4);
-        }
-        return newDayIndex;
-      });
-    }
-  };
+  // const Toggleyesterday = () => {
+  //   if (!tag) {
+  //     settag(true);
+  //     setdayindex((prev) => {
+  //       const newDayIndex = (prev - 1 + 7) % 7;
+  //       if (newDayIndex === 6) {
+  //         // Transition to previous week if the new day is Sunday
+  //         setweekindex((prevWeek) => (prevWeek - 1 + 4) % 4);
+  //       }
+  //       return newDayIndex;
+  //     });
+  //   } else {
+  //     settag(false);
+  //     setdayindex((prev) => {
+  //       const newDayIndex = (prev + 1) % 7;
+  //       if (newDayIndex === 0) {
+  //         // Transition to next week if the new day is Monday
+  //         setweekindex((prevWeek) => (prevWeek + 1) % 4);
+  //       }
+  //       return newDayIndex;
+  //     });
+  //   }
+  // };
   
 
   return (
