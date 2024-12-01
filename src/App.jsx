@@ -28,8 +28,9 @@ function App() {
        const now = new Date();
        const day = now.getDay();
        const hours = now.getHours();
+       const minutes = now.getMinutes();
 
-      if(day === 1 && hours === 0){
+      if(day === 1 && hours === 0 && minutes === 0){
         console.log(hours);
         setweekindex((prevweek)=>(prevweek +1)%4);
       }
