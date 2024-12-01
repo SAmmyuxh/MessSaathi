@@ -110,16 +110,19 @@ function App() {
     if(!flag){
       setflag(true);
       if(dayindex === 6){
+        console.log(dayindex)
         setdayindex(0);
       }else if(dayindex === 0){
+        console.log(dayindex)
         setdayindex(1)
         if(weekindex === 3){
           setweekindex(0);
         }else{
           setweekindex(weekindex+1);
         }      
-        setdayindex(dayindex+1);
-      }
+        }else{
+          setdayindex(dayindex+1);
+        }
       
     }else{
       setflag(false);
