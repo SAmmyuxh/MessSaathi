@@ -18,7 +18,7 @@ function App() {
 
   // Persistent states
   const [dayindex, setdayindex] = useState(() => getFromSessionStorage("dayindex", new Date().getDay()));
-  const [weekindex, setweekindex] = useState(() => getFromSessionStorage("weekindex", 0));
+  const [weekindex, setweekindex] = useState(() => getFromSessionStorage("weekindex", 1));
   const [flag, setflag] = useState(() => getFromSessionStorage("flag", false));
   const [tag, settag] = useState(() => getFromSessionStorage("tag", false));
 
@@ -28,7 +28,9 @@ function App() {
        const now = new Date();
        const day = now.getDay();
        const hours = now.getHours();
-      if(day === 0 && hours >=12){
+
+      if(day === 1 && hours === 0){
+        console.log(hours);
         setweekindex((prevweek)=>(prevweek +1)%4);
       }
    }
@@ -106,16 +108,15 @@ function App() {
   const Toggletomorrow = ()=>{
     if(!flag){
       setflag(true);
-      console.log(dayindex)
       if(dayindex === 6){
         setdayindex(0);
       }else if(dayindex === 0){
         setdayindex(1)
         if(weekindex === 3){
           setweekindex(0);
-        }
-        setweekindex(weekindex+1);
-      }else{
+        }else{
+          setweekindex(weekindex+1);
+        }      
         setdayindex(dayindex+1);
       }
       
@@ -127,6 +128,8 @@ function App() {
         setdayindex(0)
         if(weekindex === 0){
           setweekindex(3);
+        }else{
+          setweekindex(weekindex-1)
         }
       }else{
         setdayindex(dayindex-1);
@@ -144,8 +147,10 @@ function App() {
         setdayindex(0)
         if(weekindex === 0){
           setweekindex(3)
+        }else{
+          setweekindex(weekindex -1)
         }
-        setweekindex(weekindex -1)
+       
       }else{
         setdayindex(dayindex-1)
       }
@@ -158,8 +163,10 @@ function App() {
         setdayindex(1)
         if(weekindex === 3){
           setweekindex(0)
+        }else{
+          setweekindex(weekindex+1)
         }
-        setweekindex(weekindex+1)
+        
       }else{
         setdayindex(dayindex+1);
       }
