@@ -63,12 +63,17 @@ function App() {
     const minutes = now.getMinutes();
 
     if ((hours === 7 && minutes >= 0) || hours === 8 || (hours === 9 && minutes <= 0)) {
+      if(dayindex === 0){
+        if((hours === 8 && minutes >=0) && (hours === 9 && minutes <=30)){
+          settype("It's BreakFast time");
+        }
+      }
       settype("It's Breakfast Time");
     } else if ((hours === 12 && minutes >= 30) || (hours === 13) || (hours === 14 && minutes <= 30)) {
       settype("It's Lunch Time");
-    } else if ((hours === 18) || (hours === 19 && minutes <= 30)) {
+    } else if ((hours === 17 && minutes<=30) || (hours === 19 && minutes<=0)) {
       settype("It's Snacks Time");
-    } else if ((hours === 20 && minutes >= 45) || hours === 21 || (hours === 22 && minutes <= 15)) {
+    } else if ((hours === 20 && minutes >= 30) || hours === 21 || (hours === 22 && minutes <= 15)) {
       settype("It's Dinner Time");
     } else {
       settype("No Food Yet");
@@ -84,7 +89,7 @@ function App() {
 
   const updatetimings = () => {
     const now = new Date();
-    const hours = String(now.getHours()).padStart(2, "0");
+    const hours = String(now.getHours() % 12).padStart(2, "0");
     const minutes = String(now.getMinutes()).padStart(2, "0");
     const seconds = String(now.getSeconds()).padStart(2, "0");
 
