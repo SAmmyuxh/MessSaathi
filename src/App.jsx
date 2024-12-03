@@ -80,7 +80,7 @@ function App() {
       settype("It's Breakfast Time");
     } else if ((hours === 12 && minutes >= 30) || (hours === 13) || (hours === 14 && minutes <= 30)) {
       settype("It's Lunch Time");
-    } else if ((hours === 17 && minutes<=30) || (hours === 19 && minutes<=0)) {
+    } else if ((hours === 17 && minutes>=30) || (hours === 19 && minutes<=0)) {
       settype("It's Snacks Time");
     } else if ((hours === 20 && minutes >= 30) || hours === 21 || (hours === 22 && minutes <= 15)) {
       settype("It's Dinner Time");
