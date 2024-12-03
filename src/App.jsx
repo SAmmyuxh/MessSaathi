@@ -267,16 +267,22 @@ function App() {
             </div>
             <hr className="w-11/12 border-t-2 border-black ml-5" />
             <div className="flex justify-around mt-2">
-              <u>
-                <h4 className="md:text-xl text-xs hover:cursor-pointer" onClick={Toggleyesterday}>
-                  {flag ? "" : tag ? <span className="pr-[168px]">←Today's Menu</span> : "←Yesterday's Menu?"}
-                </h4>
-              </u>
-              <u>
-                <h4 className="md:text-xl text-xs hover:cursor-pointer" onClick={Toggletomorrow}>
-                  {tag ? "" : flag ? <span className="pl-[200px]">←Go Back</span> : "See What's Tomorrow?→"}
-                </h4>
-              </u>
+            <u>
+  <h4
+    className="md:text-xl text-xs hover:cursor-pointer text-[#5a1515]  underline-offset-2 hover:no-underline transition duration-200"
+    onClick={Toggleyesterday}
+  >
+    {flag ? "" : tag ? <span className="pr-[168px]">←Today's Menu</span> : "←Yesterday's Menu?"}
+  </h4>
+</u>
+<u>
+  <h4
+    className="md:text-xl text-xs hover:cursor-pointer text-[#5a1515]  underline-offset-2 hover:no-underline transition duration-200"
+    onClick={Toggletomorrow}
+  >
+    {tag ? "" : flag ? <span className="pl-[200px]">←Go Back</span> : "See What's Tomorrow?→"}
+  </h4>
+</u>
             </div>
             <div className="ml-4 mt-3 md:text-2xl text-sm ">
               <h4>Breakfast</h4>
