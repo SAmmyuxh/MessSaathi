@@ -95,7 +95,7 @@ const menus ={
             "breakfast": "BARA (4 PC BIG), GHUGUNI, TEA",
             "lunch": "RICE, ROTI, DAL, FISH KALIA (2 PC)/PANEER MASALA, SALAD, DAHI VENDI/DAHI BAIGANA",
             "snacks": "PAMPDI CHAT, ONION, SEU, IMLI CHUTNEY, TEA",
-            "dinner": "HYDRABADI CHICKEN (2pcs@150gm) DUM BIRIYANI WITH RAITA, 1 PC BOIL EGG"
+            "dinner": "DUM BIRYANI WITH 1 PC ALOO CHICKEN CURRY/PANEER CURRY,FROOTI"
           }
         },
         {
