@@ -74,16 +74,16 @@ function App() {
     if ((hours === 7 && minutes >= 0) || hours === 8 || (hours === 9 && minutes <= 0)) {
       if(dayindex === 0){
         if((hours === 8 && minutes >=0) && (hours === 9 && minutes <=30)){
-          settype("It's BreakFast time");
+          settype("It's BreakFast time(8:30AM to 9AM)");
         }
       }
-      settype("It's Breakfast Time");
+      settype("It's Breakfast Time(7AM TO 9AM)");
     } else if ((hours === 12 && minutes >= 30) || (hours === 13) || (hours === 14 && minutes <= 30)) {
-      settype("It's Lunch Time");
+      settype("It's Lunch Time(12:30PM TO 2:30PM)");
     } else if ((hours === 17 && minutes>=30) || (hours === 19 && minutes<=0)) {
-      settype("It's Snacks Time");
+      settype("It's Snacks Time(5:30PM TO 7PM)");
     } else if ((hours === 20 && minutes >= 30) || hours === 21 || (hours === 22 && minutes <= 15)) {
-      settype("It's Dinner Time");
+      settype("It's Dinner Time(8:30PM to 10:15PM)");
     } else {
       settype("No Food Yet");
     }
