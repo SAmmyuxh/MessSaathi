@@ -23,21 +23,30 @@ function App() {
   const [tag, settag] = useState(() => getFromSessionStorage("tag", false));
 
   // Helper to calculate the initial week index based on the current date
- useEffect(() => {
-   const updateandcheckweek =()=>{
-       const now = new Date();
-       const day = now.getDay();
-       const hours = now.getHours();
-       const minutes = now.getMinutes();
-
-      if(day === 1 && hours === 0 && minutes === 0){
-        console.log(hours);
-        setweekindex((prevweek)=>(prevweek +1)%4);
+  useEffect(() => {
+    let weekUpdated = false;
+  
+    const updateandcheckweek = () => {
+      const now = new Date();
+      const day = now.getDay();
+      const hours = now.getHours();
+  
+      if (day === 1 && hours === 0 && !weekUpdated) {
+        console.log("Week updated at", hours);
+        setweekindex((prevweek) => (prevweek + 1) % 4);
+        weekUpdated = true;
       }
-   }
-   const interval = setInterval(updateandcheckweek, 60000);
-   return () => clearInterval(interval);
- }, [])
+  
+      // Reset the flag after the day progresses
+      if (day !== 1 || hours > 0) {
+        weekUpdated = false;
+      }
+    };
+  
+    const interval = setInterval(updateandcheckweek, 60000); // Check every minute
+    return () => clearInterval(interval); // Clean up
+  }, []);
+  
  
 
   // Save states to sessionStorage when they change
@@ -260,7 +269,7 @@ function App() {
             <div className="flex justify-around mt-2">
               <u>
                 <h4 className="md:text-xl text-xs hover:cursor-pointer" onClick={Toggleyesterday}>
-                  {flag ? "" : tag ? <span className="pr-[168px]">Today's Menu</span> : "←Yesterday's Menu?"}
+                  {flag ? "" : tag ? <span className="pr-[168px]">←Today's Menu</span> : "←Yesterday's Menu?"}
                 </h4>
               </u>
               <u>
