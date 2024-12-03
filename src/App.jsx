@@ -243,7 +243,7 @@ function App() {
 
   return (
     <>
-      <div className="relative h-[900px]">
+      <div className="relative h-[900px] ">
         <video autoPlay muted loop className="absolute h-[900px] w-full object-cover z-[-1]">
           <source src="/bgvideo.mp4" type="video/mp4" />
         </video>
@@ -252,10 +252,10 @@ function App() {
         </div>
         <div className="flex justify-center items-center h-screen z-10 ">
           <div
-            className="bg-[#a7998eda] md:h-4/6 md:w-3/4 lg:h-[545px] lg:w-[480px] mt-8 w-80 min-[420px]:h-[60%] min-[420px]:w-80 rounded-3xl font-semibold h-fit"
+            className="bg-[#a7998eda] md:h-4/6 md:w-3/4 lg:h-[545px] lg:w-[480px] mt-8 w-80 min-[420px]:h-[60%] min-[420px]:w-80 rounded-3xl font-bold h-fit"
             ref={contentref}
           >
-            <div className="flex justify-between">
+            <div className="flex justify-between ">
               <div className="flex flex-col h-8 p-4 pl-4 ">
                 <h3 className="md:text-2xl text-sm">{type}</h3>
                 <h3 className="md:text-2xl text-sm">Timings: {time}</h3>
