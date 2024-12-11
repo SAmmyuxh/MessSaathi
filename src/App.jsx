@@ -24,28 +24,31 @@ function App() {
 
   // Helper to calculate the initial week index based on the current date
   useEffect(() => {
-    let weekUpdated = false;
-  
-    const updateandcheckweek = () => {
+    const updateAndCheckWeek = () => {
       const now = new Date();
       const day = now.getDay();
       const hours = now.getHours();
   
-      if (day === 1 && hours === 0 && !weekUpdated) {
-        console.log("Week updated at", hours);
-        setweekindex((prevweek) => (prevweek + 1) % 4);
-        weekUpdated = true;
-      }
+      // Retrieve the last updated time from localStorage
+      const lastUpdated = localStorage.getItem('lastWeekUpdate');
+      const lastUpdateDate = lastUpdated ? new Date(lastUpdated) : null;
   
-      // Reset the flag after the day progresses
-      if (day !== 1 || hours > 0) {
-        weekUpdated = false;
+      // Update if it's Monday at 00:00 and hasn't been updated today
+      if (
+        day === 1 &&
+        hours === 0 &&
+        (!lastUpdateDate || lastUpdateDate.getDate() !== now.getDate())
+      ) {
+        console.log("Week updated at", hours);
+        setweekindex((prevWeek) => (prevWeek + 1) % 4);
+        localStorage.setItem('lastWeekUpdate', now.toISOString());
       }
     };
   
-    const interval = setInterval(updateandcheckweek, 60000); // Check every minute
+    const interval = setInterval(updateAndCheckWeek, 60000); // Check every minute
     return () => clearInterval(interval); // Clean up
   }, []);
+  
 
   // Save states to sessionStorage when they change
   useEffect(() => {

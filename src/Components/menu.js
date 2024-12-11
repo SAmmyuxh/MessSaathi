@@ -173,7 +173,7 @@ const menus ={
             "breakfast": "FRUIT BREAD (4 PC), JAM, ALUCHOP (2 PC), BANANA(BIG)/ EGG(1 PC) TEA",
             "lunch": "RICE, ROTI, DAL, MUSTARD FISH(2PC)/ MUSHROOM & GR PEAS MASALA(LESS POTATO), SALAD, SRIRAM PAPAD BIG",
             "snacks": "ALOO PAKUDI, TOMATO SAUCE, COFFEE",
-            "dinner": "MIX VEG DUM BIRIYANI WITH RAITA, PANEER MASALA, RASAGOLA"
+            "dinner": "FRIED RICE,roti,dal,chicken chilly/paneer masala,seasonal bhaja salad"
           }
         },
         {
