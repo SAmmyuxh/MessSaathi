@@ -47,7 +47,7 @@ function App() {
   
     const interval = setInterval(updateAndCheckWeek, 60000); // Check every minute
     return () => clearInterval(interval); // Clean up
-  }, []);
+  }, [dayindex]);
 
 
   // Save states to sessionStorage when they change
