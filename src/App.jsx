@@ -18,7 +18,7 @@ function App() {
 
   // Persistent states
   const [dayindex, setdayindex] = useState(() => getFromSessionStorage("dayindex", new Date().getDay()));
-  const [weekindex, setweekindex] = useState(() => getFromSessionStorage("weekindex", 3));
+  const [weekindex, setweekindex] = useState(() => getFromSessionStorage("weekindex", 0));
   const [flag, setflag] = useState(() => getFromSessionStorage("flag", false));
   const [tag, settag] = useState(() => getFromSessionStorage("tag", false));
 
@@ -47,7 +47,7 @@ function App() {
   
     const interval = setInterval(updateAndCheckWeek, 60000); // Check every minute
     return () => clearInterval(interval); // Clean up
-  }, [dayindex]);
+  }, []);
 
 
   // Save states to sessionStorage when they change
